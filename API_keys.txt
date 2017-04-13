@@ -1,0 +1,15 @@
+TWITTER
+
+
+Access Level	Read and write (modify app permissions)
+Owner	dcanlas1980
+Owner ID	852547974655864832
+
+	
+##################################################################################################
+Consumer Key (API Key)	GTm2LbGmAOwI0WxRPvQPYYbZk
+
+##################################################################################################
+Consumer Secret (API Secret)	LJbKMPBd6xFsy24ixqEPfH11zBnnAZbSauzPcHVGEcZc0XqISM
+
+
