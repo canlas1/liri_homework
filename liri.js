@@ -24,6 +24,66 @@ switch (operator) {
     break;
 }
 
+// If the "tweets" function is called...
+function tweets() {
+
+  // // We will read the existing tweet file
+  // fs.readFile("random.txt", "utf8", function(err, data) {
+
+  //   // Break down all the numbers inside
+  //   data = data.split(", ");
+  //   var result = 0;
+
+  //   // Loop through those numbers and add them together to get a sum.
+  //   for (var i = 0; i < data.length; i++) {
+  //     if (parseFloat(data[i])) {
+  //       result += parseFloat(data[i]);
+  //     }
+  //   }
+
+  //   // We will then print the final balance rounded to two decimal places.
+  //   console.log("You have a total of " + result.toFixed(2));
+  // });
+}
+
+
+// If the "Spotify" function is called...
+function spotify() {
+
+  // // We will add the value to the bank file.
+  // fs.appendFile("bank.txt", ", " + value, (err, value) => {
+  //   console.log("Deposited " + value + ".");
+    
+  // });
+
+  // We will then print the value that was added (but we wont print the total).
+}
+
+// If the "movie" function is called
+function movie() {
+
+  // // We will add a negative value to the bank file.
+  // fs.appendFile("random.txt", ", -" + value);
+
+  // // We will then print the value that was subtracted (but we wont print the total).
+  // console.log("Movie " + value + ".");
+}
+
+function movie() {
+
+  // // We will add a negative value to the bank file.
+  // fs.appendFile("random.txt", ", -" + value);
+
+  // // We will then print the value that was subtracted (but we wont print the total).
+  // co
+}
+
+
+
+
+
+
+
 
 // Store all of the arguments in an array
 var nodeArgs = process.argv;
