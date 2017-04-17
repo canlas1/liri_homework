@@ -6,22 +6,32 @@ var inquirer = require('inquirer');
 //*******Packages i need to install*******
 var spotify = require('spotify');
 var Twitter = require('Twitter')
-var omdb = require('omdb');
+var imdb = require('imdb-node-api');
+
+// Make it so liri.js can take in one of the following commands:
+var userTweets = `my-tweets`;
+var userSpotify = `spotify-this-song`;
+var userMovie = 'movie-this';
+var userDoWhat = 'do-what-it-says';
+
+// Take two arguments.
+// The first will be the action (i.e. "my-tweets", "spotify-this-song", etc
+// The second will be the amount that will be added, withdrawn, etc.
+var userChoice = process.argv[2];
+var value = process.argv[3];
+
+// We will then create a switch-case statement (if-then would also work).
+// The switch-case will direct which function gets run.
+
 
 // console.log(inquirer);
-console.log(twitterKeys);
+// console.log(twitterKeys);
 
 // console.log(process.argv);
 
 // Global variables
 var userName;
 
-// Make it so liri.js can take in one of the following commands:
-
-var userTweets = `my-tweets`;
-var userSpotify = `spotify-this-song`;
-var userMovie = 'movie-this';
-var userDoWhat = 'do-what-it-says';
 
 // =======================================================================
 // GLOBAL FUNCTIONS
@@ -31,7 +41,7 @@ function displayUserTweets() {
     var params = { screen_name: 'dcanlas1980' };
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-            console.log(tweets);
+            // console.log(tweets);
 
             for (var i = 0; i < 3; i++) {
                 console.log(tweets[i].text);
@@ -39,100 +49,77 @@ function displayUserTweets() {
             }
         }
     });
-
-
-
 }
 
 function spotifySearchSong() {
-
-	// ASK FOR SONG
-    inquirer.prompt([ /* Pass your questions in here */ ])
-
-    // THEN SPIT OUT THE NAME OF THE SONG
-    .then(function(answers) {
-        // Use user feedback for... whatever!! 
-
-
-       var query = answers.song;
-
-
-       // LOOK UP REQUEST SONG
-       spotify.search({ type: 'track', query: query }, function(err, data) {
+    spotify.search({ type: 'track', query: value }, function(err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
             return;
 
-
-
-
         }
-        var spotifyData = data.tracks.items
-            // console.log(data);
+        var spotifyData = data.tracks.items;
         for (i in spotifyData) {
-            console.log(spotifyData[i].album.name);
-            console.log(spotifyData[i].album.name.artists.external_urls);
-            // console.log(spotifyData[i].album.name);
-
-            // console.log(data.tracks.items[i].album.artists.name);
-            // console.log(data.tracks.items[i].album.artists.external_urls);
+            console.log("=================================================================");
+            console.log("Artist involved:   " + spotifyData[i].artists[0].name);
+            console.log("=================================================================");
+            console.log("Album Name:        " + spotifyData[i].album.name);
+            console.log("=================================================================");
+            console.log("Song Name:         " + value);
+            console.log("=================================================================");
+            console.log("External_urls:     " + spotifyData[i].album.external_urls.spotify);
+            console.log("=================================================================");
         }
-        // Do something with 'data' 
     });
-    });
-    
 }
+
 
 function movieInformationDisplay() {
 
-    // body...
+	imdb.getByImdbId('tt0106519', function (err, data) {
+    console.error("error: " + err);
+    console.log("data: " + data);
+
+    var movieData = data
+    console.log(data);
+	
+
+
+	});
 }
 
-function doWhat() {
+//     // body...
+// }
 
-    // body...
+// function doWhat() {
+
+//     // body...
+// }
+// // =======================================================================
+
+
+
+
+// We will then create a switch-case statement (if-then would also work).
+// The switch-case will direct which function gets run.
+switch (userChoice) {
+    case "my-tweets":
+        displayUserTweets();
+        break;
+
+    case "spotify-this-song":
+        spotifySearchSong();
+        break;
+
+    case "movie-this":
+        movieInformationDisplay();
+        break;
+
+    case "do-what-it-says":
+        doWhat();
+        break;
 }
-// =======================================================================
 
-
-// Testing Inquirer
-inquirer.prompt([{
-    type: "input",
-    message: "what is your name?",
-    name: "name"
-}, {
-    //type is type of question goes by the inquirer docs
-
-    type: "list",
-    //name is the data that user gets back
-    choices: [userTweets, 'spotify-this-song', 'movie-this', 'do-what-it-says'],
-
-    name: "testInput",
-    message: "How's your day going?"
-}]).then(function(answers) {
-    console.log("Hello " + answers.name + ", I hope you're having a great day")
-        //making this a local variable because it may consitanly change ####SCOPE####
-    var userChoice = answers.testInput;
-    console.log(userChoice);
-    // Use user feedback for... whatever!! 
-    switch (userChoice) {
-        case "my-tweets":
-            displayUserTweets();
-            break;
-
-        case "spotify-this-song":
-            spotifySearchSong();
-            break;
-
-        case "movie-this":
-            movieInformationDisplay();
-            break;
-
-        case "do-what-it-says":
-            doWhat();
-            break;
-    }
-});
 
 
 
