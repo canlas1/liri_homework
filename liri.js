@@ -148,7 +148,7 @@ function doWhat() {
         nodeArg = dataArray[0];
         value = dataArray[1];
         console.log("THIS IS MY VALUE: " + value);
-        
+
         //grabbed from npm changed set query to value
         spotify.search({ type: 'track', query: value }, function(err, data) {
             if (err) {
