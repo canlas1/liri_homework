@@ -148,6 +148,7 @@ function doWhat() {
         nodeArg = dataArray[0];
         value = dataArray[1];
         console.log("THIS IS MY VALUE: " + value);
+        
         //grabbed from npm changed set query to value
         spotify.search({ type: 'track', query: value }, function(err, data) {
             if (err) {
@@ -171,29 +172,6 @@ function doWhat() {
         });
     });
 };
-
-// }
-
-//      spotify.search({ type: 'track', query: value}, function(err, data) {
-//          if (err) {
-//              console.log('Error occurred: ' + err);
-//              return;
-//          }
-
-//          randomData = data.tracks.items;
-//          console.log("THIS IS RANDOM DATA:  " + randomData)
-//          for (i in randomData) {
-//              console.log("=================================================================");
-//              console.log("Artist involved:   " + randomData[i].artists[0].name);
-//              console.log("=================================================================");
-//              console.log("Album Name:        " + randomData[i].album.name);
-//              console.log("=================================================================");
-//              console.log("Song Name:         " + value);
-//              console.log("=================================================================");
-//              console.log("External_urls:     " + randomData[i].album.external_urls.spotify);
-//              console.log("=================================================================");
-//          }
-//      });
 
 
 //#############################
