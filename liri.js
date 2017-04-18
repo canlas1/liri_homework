@@ -21,7 +21,6 @@ var userChoice = process.argv[2];
 var value = process.argv[3];
 var userName;
 
-//
 // // Created a series of questions
 // inquirer.prompt([
 
@@ -53,20 +52,19 @@ function displayUserTweets() {
         if (!error) {
             // console.log(tweets);
 
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < userTweets.length; i++) {
                 console.log("=================================================================");
                 console.log("THIS TWEET WAS CREATED ON:  " + tweets[i].created_at);
                 console.log("=================================================================");
                 console.log("TEXT OF THE LAST TWEET:  " + tweets[i].text);
-
-
             }
         }
     });
 }
 
 function spotifySearchSong() {
-     for (var i = 2; i < nodeArg.length; i++) {
+    //for loop to make sure the value is blank go to "The Sign" or multiple words then define logic 
+    for (var i = 2; i < nodeArg.length; i++) {
         if (i < 3) {
             value = "The" + "+" + "Sign";
         } else if (i > 3 && i < nodeArg.length) {
@@ -95,9 +93,6 @@ function spotifySearchSong() {
             console.log("External_urls:     " + spotifyData[i].album.external_urls.spotify);
             console.log("=================================================================");
         }
-
-
-
     });
 }
 
@@ -158,10 +153,6 @@ function movieInformationDisplay() {
     });
 }
 
-
-
-
-
 // `node liri.js do-what-it-says`
 //* Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 //* It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
@@ -173,23 +164,24 @@ function doWhat() {
     fs.readFile("random.txt", "utf8", function(error, data) {
         var randomData = data;
 
-        spotify.search({ type: 'track', query: value }, function(err, data) {
+        spotify.search({ type: 'track', query: value}, function(err, data) {
             if (err) {
                 console.log('Error occurred: ' + err);
                 return;
 
             }
 
-            var spotifyData = data.tracks.items;
-            for (i in spotifyData) {
+            randomData = data.tracks.items;
+            console.log("THIS IS RANDOM DATA:  " + randomData)
+            for (i in randomData) {
                 console.log("=================================================================");
-                console.log("Artist involved:   " + spotifyData[i].artists[0].name);
+                console.log("Artist involved:   " + randomData[i].artists[0].name);
                 console.log("=================================================================");
-                console.log("Album Name:        " + spotifyData[i].album.name);
+                console.log("Album Name:        " + randomData[i].album.name);
                 console.log("=================================================================");
                 console.log("Song Name:         " + value);
                 console.log("=================================================================");
-                console.log("External_urls:     " + spotifyData[i].album.external_urls.spotify);
+                console.log("External_urls:     " + randomData[i].album.external_urls.spotify);
                 console.log("=================================================================");
             }
 

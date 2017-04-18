@@ -1,3 +1,4 @@
+console.log('this is loaded');
 //below are TWITTER KEYS THAT I GENERATED
 var keys = {
   consumer_key: 'GTm2LbGmAOwI0WxRPvQPYYbZk',
