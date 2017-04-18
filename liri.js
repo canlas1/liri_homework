@@ -1,12 +1,13 @@
 //*******KEYS*************
 var twitterKeys = require("./keys.js");
-// Load the fs package to read and write
-var fs = require('fs');
-var inquirer = require('inquirer');
-var request = require("request");
+
 //*******Packages i need to install*******
 var spotify = require('spotify');
 var Twitter = require('Twitter');
+var fs = require('fs');
+var inquirer = require('inquirer');
+var request = require("request");
+
 
 // Make it so liri.js can take in one of the following commands:
 var userTweets = `my-tweets`;
@@ -20,26 +21,6 @@ var nodeArg = process.argv;
 var userChoice = process.argv[2];
 var value = process.argv[3];
 var userName;
-
-// // Created a series of questions
-// inquirer.prompt([
-
-//   {
-//     type: "list",
-//     name: "action",
-//     message: "Enter a user command",
-//     choices: [`my-tweets`, `spotify-this-song`, 'movie-this', 'do-what-it-says']
-//   },
-// ]).then(function(user) {
-
-
-//   // If the user guesses the password...
-//   if (user.action === choices[0]) {
-//     function displayUserTweets()
-//   }
-// }
-
-
 
 
 // =======================================================================
@@ -61,7 +42,7 @@ function displayUserTweets() {
         }
     });
 }
-
+//#############################
 function spotifySearchSong() {
     //for loop to make sure the value is blank go to "The Sign" or multiple words then define logic 
     for (var i = 2; i < nodeArg.length; i++) {
@@ -95,6 +76,7 @@ function spotifySearchSong() {
         }
     });
 }
+//#############################
 
 function movieInformationDisplay() {
 
@@ -109,12 +91,8 @@ function movieInformationDisplay() {
         }
     }
 
-
     var queryUrl = "http://www.omdbapi.com/?t=" + value + "&tomatoes=true&y=&plot=short&r=json";
     console.log(queryUrl);
-
-    // var queryUrl = "http://www.omdbapi.com/?t=" + value + "&tomatoes=true&y=&plot=short&r=json";
-    // console.log(queryUrl);
 
     var movieRequest = request(queryUrl, function(error, response, body) {
 
@@ -152,12 +130,9 @@ function movieInformationDisplay() {
         };
     });
 }
-
-// `node liri.js do-what-it-says`
 //* Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
 //* It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
 //* Feel free to change the text in that document to test out the feature for other commands.
-
 //#############################
 function doWhat() {
 
@@ -168,7 +143,6 @@ function doWhat() {
             if (err) {
                 console.log('Error occurred: ' + err);
                 return;
-
             }
 
             randomData = data.tracks.items;
@@ -184,16 +158,10 @@ function doWhat() {
                 console.log("External_urls:     " + randomData[i].album.external_urls.spotify);
                 console.log("=================================================================");
             }
-
-
-
         });
     });
-
-
-
 }
-
+//#############################
 switch (userChoice) {
     case "my-tweets":
         displayUserTweets();
@@ -211,3 +179,22 @@ switch (userChoice) {
         doWhat();
         break;
 }
+
+// // Created a series of questions
+// inquirer.prompt([
+
+//   {
+//     type: "list",
+//     name: "action",
+//     message: "Enter a user command",
+//     choices: [`my-tweets`, `spotify-this-song`, 'movie-this', 'do-what-it-says']
+//   },
+// ]).then(function(user) {
+
+
+//   // If the user guesses the password...
+//   if (user.action === choices[0]) {
+//     function displayUserTweets()
+//   }
+// }
+
