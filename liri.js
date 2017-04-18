@@ -6,7 +6,8 @@ var inquirer = require('inquirer');
 //*******Packages i need to install*******
 var spotify = require('spotify');
 var Twitter = require('Twitter')
-var imdb = require('imdb-node-api');
+const imdb = require('imdb-api');
+
 
 // Make it so liri.js can take in one of the following commands:
 var userTweets = `my-tweets`;
@@ -20,17 +21,29 @@ var userDoWhat = 'do-what-it-says';
 var userChoice = process.argv[2];
 var value = process.argv[3];
 
-// We will then create a switch-case statement (if-then would also work).
-// The switch-case will direct which function gets run.
-
-
-// console.log(inquirer);
-// console.log(twitterKeys);
-
-// console.log(process.argv);
-
 // Global variables
 var userName;
+
+
+// // Created a series of questions
+// inquirer.prompt([
+
+//   {
+//     type: "list",
+//     name: "action",
+//     message: "Enter a user command",
+//     choices: [`my-tweets`, `spotify-this-song`, 'movie-this', 'do-what-it-says']
+//   },
+// ]).then(function(user) {
+
+
+//   // If the user guesses the password...
+//   if (user.action === choices[0]) {
+//     function displayUserTweets()
+//   }
+// }
+  
+
 
 
 // =======================================================================
@@ -43,8 +56,12 @@ function displayUserTweets() {
         if (!error) {
             // console.log(tweets);
 
-            for (var i = 0; i < 3; i++) {
-                console.log(tweets[i].text);
+            for (var i = 0; i < 20; i++) {
+                console.log("=================================================================");
+                console.log("THIS TWEET WAS CREATED ON:  " + tweets[i].created_at);
+                console.log("=================================================================");
+                console.log("TEXT OF THE LAST TWEET:  " + tweets[i].text);
+
 
             }
         }
@@ -58,6 +75,7 @@ function spotifySearchSong() {
             return;
 
         }
+
         var spotifyData = data.tracks.items;
         for (i in spotifyData) {
             console.log("=================================================================");
@@ -70,38 +88,83 @@ function spotifySearchSong() {
             console.log("External_urls:     " + spotifyData[i].album.external_urls.spotify);
             console.log("=================================================================");
         }
+
+
+
     });
 }
 
 
 function movieInformationDisplay() {
 
-	imdb.getByImdbId('tt0106519', function (err, data) {
-    console.error("error: " + err);
-    console.log("data: " + data);
+    // Include the request npm package (Don't forget to run "npm install request" in this folder first!)
+    var request = require("request");
 
-    var movieData = data
-    console.log(data);
-	
+    var queryUrl = "http://www.omdbapi.com/?t=" + value + "&tomatoes=true&y=&plot=short&r=json";
+    console.log(queryUrl);
+
+    request(queryUrl, function(error, response, body) {
+
+        console.log("THIS IS THE MOVIE TITLE: " + JSON.parse(body).Title);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE MOVIE YEAR: " + JSON.parse(body).Year);
+        console.log("=================================================================");
+
+        console.log("IMDB Rating of the movie " + JSON.parse(body).Rating);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE County of production " + JSON.parse(body).Country);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE Language of the movie.: " + JSON.parse(body).Languages);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE PLOT of the movie.: " + JSON.parse(body).Plot);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE Actors in the movie: " + JSON.parse(body).Actors);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE Rotten Tomatoes Rating.: " + JSON.parse(body).tomatoRating);
+        console.log("=================================================================");
+
+        console.log("THIS IS THE Rotten Tomatoes URL: " + JSON.parse(body).tomatoURL);
+        console.log("=================================================================");
+
+    });
+
+};
 
 
-	});
+// `node liri.js do-what-it-says`
+   //* Using the `fs` Node package, LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands.
+     //* It should run `spotify-this-song` for "I Want it That Way," as follows the text in `random.txt`.
+     //* Feel free to change the text in that document to test out the feature for other commands.
+function doWhat() {
+
+  // This block of code will read from the "movies.txt" file.
+// It's important to include the "utf8" parameter or the code will provide stream data (garbage)
+// The code will store the contents of the reading inside the variable "data"
+fs.readFile("random.txt", "utf8", function(error, data) {
+
+  // We will then print the contents of data
+  console.log(data);
+
+  // Then split it by commas (to make it more readable)
+  var dataArr = data.split(",");
+
+  // We will then re-display the content as an array for later use.
+  console.log(dataArr);
+
+});
+
+
+
 }
 
-//     // body...
-// }
-
-// function doWhat() {
-
-//     // body...
-// }
-// // =======================================================================
 
 
-
-
-// We will then create a switch-case statement (if-then would also work).
-// The switch-case will direct which function gets run.
 switch (userChoice) {
     case "my-tweets":
         displayUserTweets();
@@ -243,35 +306,35 @@ switch (userChoice) {
 // // //This function determines if the first character in the specified string is a number. If it is, it parses the string until it reaches the end of the number, and returns the number as a number, not as a string.
 
 // // if(operator === 'add'){
-// // 	console.log(parseFloat(num1) + parseFloat(num2));
+// //   console.log(parseFloat(num1) + parseFloat(num2));
 
 // // }
 
 // // else if(operator === 'subtract'){
-// // 	console.log(parseFloat(num1) - parseFloat(num2));
+// //   console.log(parseFloat(num1) - parseFloat(num2));
 
 // // }
 
 // // else if(operator === 'multiply'){
-// // 	console.log(parseFloat(num1) * parseFloat(num2));
+// //   console.log(parseFloat(num1) * parseFloat(num2));
 
 // // }
 
 // // else if(operator === 'divide'){
-// // 	console.log(parseFloat(num1) / parseFloat(num2));
+// //   console.log(parseFloat(num1) / parseFloat(num2));
 
 // // }
 
 // // else if(operator === 'remainder'){
-// // 	console.log(parseFloat(num1) % parseFloat(num2));
+// //   console.log(parseFloat(num1) % parseFloat(num2));
 
 // // }
 
 // // else if(operator === 'exp'){
-// // 	console.log(parseFloat(num1) ^ parseFloat(num2));
+// //   console.log(parseFloat(num1) ^ parseFloat(num2));
 
 // // }
 
 // // else{
-// // 	console.log('not found');
+// //   console.log('not found');
 // // }
