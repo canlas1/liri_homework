@@ -26,6 +26,8 @@ var userName;
 // =======================================================================
 // GLOBAL FUNCTIONS
 function displayUserTweets() {
+
+    //grabbed from npm
     var client = new Twitter(twitterKeys);
 
     var params = { screen_name: 'dcanlas1980' };
@@ -54,7 +56,7 @@ function spotifySearchSong() {
             value = nodeArg[3];
         }
     }
-
+    //grabbed from npm changed set query to value
     spotify.search({ type: 'track', query: value }, function(err, data) {
         if (err) {
             console.log('Error occurred: ' + err);
@@ -80,7 +82,7 @@ function spotifySearchSong() {
 
 function movieInformationDisplay() {
 
-    //for loop to make sure the value is blank go to "Mr.Nobody" or multiple words then define logic 
+    //loop to make sure the value is blank go to "Mr.Nobody" or multiple words then define logic 
     for (var i = 2; i < nodeArg.length; i++) {
         if (i < 3) {
             value = "Mr" + "+" + "Nobody";
@@ -90,7 +92,7 @@ function movieInformationDisplay() {
             value = nodeArg[3];
         }
     }
-
+    //built my request by parameters and concatinating the URL
     var queryUrl = "http://www.omdbapi.com/?t=" + value + "&tomatoes=true&y=&plot=short&r=json";
     console.log(queryUrl);
 
@@ -136,31 +138,64 @@ function movieInformationDisplay() {
 //#############################
 function doWhat() {
 
-    fs.readFile("random.txt", "utf8", function(error, data) {
-        var randomData = data;
 
-        spotify.search({ type: 'track', query: value}, function(err, data) {
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+        console.log(data);
+
+        var dataArray = data.split(',');
+        console.log("THIS IS DATA ARRAY:  " + dataArray);
+        nodeArg = dataArray[0];
+        value = dataArray[1];
+        console.log("THIS IS MY VALUE: " + value);
+        //grabbed from npm changed set query to value
+        spotify.search({ type: 'track', query: value }, function(err, data) {
             if (err) {
                 console.log('Error occurred: ' + err);
                 return;
+
             }
 
-            randomData = data.tracks.items;
-            console.log("THIS IS RANDOM DATA:  " + randomData)
-            for (i in randomData) {
+            var spotifyData = data.tracks.items;
+            for (i in spotifyData) {
                 console.log("=================================================================");
-                console.log("Artist involved:   " + randomData[i].artists[0].name);
+                console.log("Artist involved:   " + spotifyData[i].artists[0].name);
                 console.log("=================================================================");
-                console.log("Album Name:        " + randomData[i].album.name);
+                console.log("Album Name:        " + spotifyData[i].album.name);
                 console.log("=================================================================");
                 console.log("Song Name:         " + value);
                 console.log("=================================================================");
-                console.log("External_urls:     " + randomData[i].album.external_urls.spotify);
+                console.log("External_urls:     " + spotifyData[i].album.external_urls.spotify);
                 console.log("=================================================================");
             }
         });
     });
-}
+};
+
+// }
+
+//      spotify.search({ type: 'track', query: value}, function(err, data) {
+//          if (err) {
+//              console.log('Error occurred: ' + err);
+//              return;
+//          }
+
+//          randomData = data.tracks.items;
+//          console.log("THIS IS RANDOM DATA:  " + randomData)
+//          for (i in randomData) {
+//              console.log("=================================================================");
+//              console.log("Artist involved:   " + randomData[i].artists[0].name);
+//              console.log("=================================================================");
+//              console.log("Album Name:        " + randomData[i].album.name);
+//              console.log("=================================================================");
+//              console.log("Song Name:         " + value);
+//              console.log("=================================================================");
+//              console.log("External_urls:     " + randomData[i].album.external_urls.spotify);
+//              console.log("=================================================================");
+//          }
+//      });
+
+
 //#############################
 switch (userChoice) {
     case "my-tweets":
@@ -197,4 +232,3 @@ switch (userChoice) {
 //     function displayUserTweets()
 //   }
 // }
-
